@@ -1,0 +1,55 @@
+<html>
+<head>
+        <title>Login Facebook</title>
+        
+        <script src="http://connect.facebook.net/pt_BR/all.js"></script>
+        <link href="css/style.css" rel="stylesheet" type="text/css" />
+ 
+<script>
+FB.init({
+        appId  : '137317193130053', //ID DO APLICATIVO
+        status : true, //VEREFICA O STATUS DO LOGIN
+        cookie : true, //ABILITA OS COOKIES
+        xfbml  : true
+});
+//FUNÇÃO VERIFICA SE O USUÁRIO ESTÁ LOGADO
+function varificaLogin() {
+        //CHAMA O MÉTODO FB.getLoginStatus DA API E FAZ OS TESTES
+        FB.getLoginStatus(function(response) {
+            //SE A RESPOSTA VINDA DA COMUNICAÇÃO DA API FOR CONNECTED
+            if(response.status === 'connected') {
+                    //REDIRECIONA PARA A PÁGINA
+                    window.location.replace("http://localhost:83/dsi_html/home.php");
+            }else{
+                    //CONTRÁRIO CHAMA A FUNÇÃO DE LOGIN
+                    loginFacebook();
+            }
+        })
+}
+//FUNÇÃO QUE FAZ O LOGIN
+function loginFacebook() {
+        //CHAMA O MÉTODO FB.login QUE FAZ A AUTENTICAÇÃO COM O FACEBOOK
+        FB.login(function(response) {
+                //SE A RESPOSTA VOLTAR COM AUTENTICAÇÃO CONCLUÍDA
+                if (response.authResponse) {
+                        //REDIRECIONA PARA A PÁGINA
+                        window.location.replace("http://localhost:83/dsi_html/home.php");
+                }
+            // CRIA UMA REQUISIÇÃO PARA O APLICATICO PEGAR AS INFORMAÇÕES PESSOAIS
+            // EMAIL, PUBLICAR EM SEU NOME, FOTOS, LISTA DE AMIGOS
+        }, {scope: 'email,publish_stream,user_photos,friends_about_me' });
+}
+ 
+</script>
+</head>
+ 
+<body>
+
+<div class="container">
+     <!--CHAMA A FUNÇÃO varificaLogin 
+     <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button> --> 
+     <a id="buttom" href="#" onClick="varificaLogin();"></a>   
+</div>
+ 
+</body>
+</html>
